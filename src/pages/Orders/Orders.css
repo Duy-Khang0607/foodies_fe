@@ -1,0 +1,137 @@
+/* Order Items Animation */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Custom Scrollbar for Items Container */
+.border.rounded.bg-light::-webkit-scrollbar {
+  width: 6px;
+}
+
+.border.rounded.bg-light::-webkit-scrollbar-track {
+  background: #f1f1f1;
+  border-radius: 10px;
+}
+
+.border.rounded.bg-light::-webkit-scrollbar-thumb {
+  background: linear-gradient(180deg, #667eea 0%, #764ba2 100%);
+  border-radius: 10px;
+  transition: background 0.3s ease;
+}
+
+.border.rounded.bg-light::-webkit-scrollbar-thumb:hover {
+  background: linear-gradient(180deg, #764ba2 0%, #667eea 100%);
+}
+
+/* Order Card Animation */
+.order-card-enter {
+  animation: slideInUp 0.5s ease-out;
+}
+
+@keyframes slideInUp {
+  from {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Order Card Hover Effect */
+.card.h-100.shadow-sm {
+  transition: all 0.3s ease;
+}
+
+.card.h-100.shadow-sm:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15) !important;
+}
+
+/* Item Row Hover Effect */
+.list-group-item.bg-transparent:hover {
+  background-color: rgba(13, 110, 253, 0.05) !important;
+  transition: background-color 0.2s ease;
+}
+
+/* Button Hover Enhancement */
+.btn-outline-primary:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(13, 110, 253, 0.3);
+}
+
+/* Badge Pulse Animation */
+.badge.bg-primary.rounded-pill {
+  animation: pulse 2s infinite;
+}
+
+@keyframes pulse {
+  0%, 100% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.1);
+  }
+}
+
+/* Smooth Expand/Collapse */
+.border.rounded.bg-light {
+  transition: max-height 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* Loading Spinner */
+.spinner-border-sm {
+  width: 1rem;
+  height: 1rem;
+  border-width: 0.15em;
+}
+
+/* Mobile Responsive Adjustments */
+@media (max-width: 768px) {
+  .card.h-100.shadow-sm {
+    margin-bottom: 1rem;
+  }
+  
+  .border.rounded.bg-light {
+    max-height: 250px !important;
+  }
+  
+  .btn-sm {
+    font-size: 0.8rem;
+  }
+}
+
+/* Improved Typography */
+.fw-semibold {
+  font-weight: 600 !important;
+}
+
+/* Custom Badge Colors */
+.badge.bg-info {
+  background-color: #17a2b8 !important;
+}
+
+.badge.bg-secondary {
+  background-color: #6c757d !important;
+}
+
+/* Enhanced Border Styling */
+.border.rounded.bg-light {
+  border-color: #dee2e6 !important;
+  border-width: 1.5px;
+}
+
+/* Text Overflow Protection */
+.text-dark.mb-1 {
+  word-wrap: break-word;
+  word-break: break-word;
+}
+

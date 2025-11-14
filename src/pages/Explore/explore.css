@@ -1,0 +1,37 @@
+.explore-menu-list{
+    scrollbar-width: none;
+}
+.explore-menu-list::-webkit-scrollbar{
+    display: none !important;
+}
+.explore-menu hr{
+    background-color: #e2e2e2;
+    border: none;
+    height: 1px;
+    margin: 10px 0;
+}
+.explore-menu-list-item{
+    outline: none !important;
+    border: none !important;
+    -webkit-tap-highlight-color: transparent !important;
+}
+
+.explore-menu-list-item:focus,
+.explore-menu-list-item:active,
+.explore-menu-list-item:hover,
+#left-arrow:focus,
+#right-arrow:focus{
+    outline: none !important;
+    border: none !important;
+    -webkit-tap-highlight-color: transparent !important;
+    box-shadow: none !important;
+}
+
+.explore-menu-list-item .active{
+    border: 2px solid #000;
+    border-color: red;
+    color: #fff;
+    padding: 5px;
+    border-radius: 50%;
+    transition: all 0.3s ease;
+}

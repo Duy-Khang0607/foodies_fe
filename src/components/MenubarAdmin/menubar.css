@@ -1,0 +1,5 @@
+@media (min-width: 992px) {
+    .navbar-custom {
+        transform: translateX(-250px);
+    }
+}
