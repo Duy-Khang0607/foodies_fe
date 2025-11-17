@@ -7,6 +7,7 @@ import { PhotoProvider, PhotoView } from "react-photo-view";
 import { convertToBase64 } from "../../utils/convertToBase64";
 import { useNavigate } from "react-router-dom";
 import "./profile.css";
+import { formatDate } from "../../utils/formatDate";
 
 const Profile = () => {
   const navigate = useNavigate();
@@ -133,9 +134,10 @@ const Profile = () => {
       });
     }
   }, [user, isUpdate]);
+
   return (
     <div className="min-vh-100 d-flex align-items-center justify-content-center" style={{
-      background: 'linear-gradient(135deg,rgb(218, 218, 218) 0%,rgb(181, 176, 187) 100%)',
+      background: 'linear-gradient(135deg,rgb(183, 184, 159) 0%,rgb(203, 203, 203) 100%)',
       padding: '2rem 0'
     }}>
       <div className="container-fluid">
@@ -160,13 +162,9 @@ const Profile = () => {
                   e.target.style.backgroundColor = 'transparent';
                 }}
               >
-                <i className="fas fa-arrow-left me-2"></i>
-                Back to Home
+                <i className="bi bi-arrow-left me-2"></i>
+                Back
               </button>
-              <h2 className="text-white mb-0 fw-bold">
-                <i className="fas fa-user-circle me-2"></i>
-                Account
-              </h2>
             </div>
 
             {/* Main Profile Card */}
@@ -179,7 +177,7 @@ const Profile = () => {
               <div className="row g-0">
                 {/* Profile Image Section */}
                 <div className="col-12 col-md-4 d-flex flex-column align-items-center p-4" style={{
-                  background: 'linear-gradient(135deg,rgb(197, 186, 199) 0%,rgb(209, 187, 190) 100%)',
+                  background: 'linear-gradient(135deg,rgb(183, 184, 159) 0%,rgb(203, 203, 203)',
                   color: 'white'
                 }}>
                   <div className="position-relative mb-3">
@@ -299,36 +297,8 @@ const Profile = () => {
                               />
                               <label htmlFor="name">
                                 <i className="fas fa-user me-2"></i>
-                                Full Name
+                                Username
                               </label>
-                            </div>
-
-                            <div className="mb-3">
-                              <label htmlFor="avatar" className="form-label fw-semibold">
-                                <i className="fas fa-image me-2"></i>
-                                Profile Picture
-                              </label>
-                              <input
-                                type="file"
-                                className="form-control"
-                                id="avatar"
-                                name="avatar"
-                                accept="image/*"
-                                onChange={handleChange}
-                                style={{ borderRadius: '10px' }}
-                              />
-                              {avatarUploadSuccess && (
-                                <div className="alert alert-success mt-2 py-2" style={{ borderRadius: '10px' }}>
-                                  <i className="fas fa-check-circle me-2"></i>
-                                  Image uploaded successfully!
-                                </div>
-                              )}
-                              {isLoading && (
-                                <div className="alert alert-info mt-2 py-2" style={{ borderRadius: '10px' }}>
-                                  <i className="fas fa-spinner fa-spin me-2"></i>
-                                  Processing image...
-                                </div>
-                              )}
                             </div>
 
                             <div className="form-floating mb-3">
@@ -348,41 +318,6 @@ const Profile = () => {
                               </label>
                             </div>
 
-                            <div className="form-floating mb-3">
-                              <select
-                                className="form-select"
-                                id="role"
-                                name="role"
-                                value={data?.role}
-                                onChange={handleChange}
-                                style={{ borderRadius: '10px' }}
-                              >
-                                <option value="user">User</option>
-                                <option value="admin">Admin</option>
-                              </select>
-                              <label htmlFor="role">
-                                <i className="fas fa-user-tag me-2"></i>
-                                User Role
-                              </label>
-                            </div>
-                          </>
-                        ) : (
-                          <>
-                            <div className="form-floating mb-3">
-                              <input
-                                type="text"
-                                className="form-control"
-                                id="name"
-                                value={user?.name || user?.username || ""}
-                                readOnly
-                                style={{ borderRadius: '10px', backgroundColor: '#f8f9fa' }}
-                              />
-                              <label htmlFor="name">
-                                <i className="fas fa-user me-2"></i>
-                                Full Name
-                              </label>
-                            </div>
-
                             <div className="mb-3">
                               <label htmlFor="avatar" className="form-label fw-semibold">
                                 <i className="fas fa-image me-2"></i>
@@ -398,17 +333,55 @@ const Profile = () => {
                                 style={{ borderRadius: '10px' }}
                               />
                               {avatarUploadSuccess && (
-                                <div className="alert alert-success mt-2 py-2" style={{ borderRadius: '10px' }}>
-                                  <i className="fas fa-check-circle me-2"></i>
+                                <p className="alert alert-success mt-2 py-2 fs-6" style={{ borderRadius: '10px' }}>
+                                  <i className="bi bi-check-circle me-2"></i>
                                   Image uploaded successfully!
-                                </div>
+                                </p>
                               )}
                               {isLoading && (
-                                <div className="alert alert-info mt-2 py-2" style={{ borderRadius: '10px' }}>
-                                  <i className="fas fa-spinner fa-spin me-2"></i>
+                                <p className="alert alert-info mt-2 py-2 fs-6" style={{ borderRadius: '10px' }}>
+                                  <i className="bi bi-arrow-repeat me-2"></i>
                                   Processing image...
-                                </div>
+                                </p>
                               )}
+                            </div>
+
+                            {user?.role === 'admin' && (
+                              <div className="form-floating mb-3">
+                                <select
+                                  className="form-select"
+                                  id="role"
+                                  name="role"
+                                  value={data?.role}
+                                  onChange={handleChange}
+                                  style={{ borderRadius: '10px' }}
+                                >
+                                  <option value="user">User</option>
+                                  <option value="admin">Admin</option>
+                                </select>
+                                <label htmlFor="role">
+                                  <i className="fas fa-user-tag me-2"></i>
+                                  User Role
+                                </label>
+                              </div>
+                            )}
+
+                          </>
+                        ) : (
+                          <>
+                            <div className="form-floating mb-3">
+                              <input
+                                type="text"
+                                className="form-control"
+                                id="name"
+                                value={user?.name}
+                                readOnly
+                                style={{ borderRadius: '10px', backgroundColor: '#f8f9fa' }}
+                              />
+                              <label htmlFor="name">
+                                <i className="fas fa-user me-2"></i>
+                                Username
+                              </label>
                             </div>
 
                             <div className="form-floating mb-3">
@@ -426,23 +399,54 @@ const Profile = () => {
                               </label>
                             </div>
 
-                            <div className="form-floating mb-3">
-                              <select
-                                className="form-select"
-                                id="role"
-                                name="role"
-                                value={data?.role}
+                            <div className="mb-3">
+                              <label htmlFor="avatar" className="form-label fw-semibold">
+                                <i className="fas fa-image me-2"></i>
+                                Profile Picture
+                              </label>
+                              <input
+                                type="file"
+                                className="form-control"
+                                id="avatar"
+                                name="avatar"
+                                accept="image/*"
                                 onChange={handleChange}
                                 style={{ borderRadius: '10px' }}
-                              >
-                                <option value="user">User</option>
-                                <option value="admin">Admin</option>
-                              </select>
-                              <label htmlFor="role">
-                                <i className="fas fa-user-tag me-2"></i>
-                                User Role
-                              </label>
+                                disabled
+                              />
+                              {avatarUploadSuccess && (
+                                <p className="alert alert-success mt-2 py-2 fs-6" style={{ borderRadius: '10px' }}>
+                                  <i className="bi bi-check-circle me-2"></i>
+                                  Image uploaded successfully!
+                                </p>
+                              )}
+                              {isLoading && (
+                                <p className="alert alert-info mt-2 py-2 fs-6" style={{ borderRadius: '10px' }}>
+                                  <i className="bi bi-arrow-repeat me-2"></i>
+                                  Processing image...
+                                </p>
+                              )}
                             </div>
+
+                            {user?.role === 'admin' && (
+                              <div className="form-floating mb-3">
+                                <select
+                                  className="form-select"
+                                  id="role"
+                                  name="role"
+                                  value={data?.role}
+                                  onChange={handleChange}
+                                  style={{ borderRadius: '10px' }}
+                                >
+                                  <option value="user">User</option>
+                                  <option value="admin">Admin</option>
+                                </select>
+                                <label htmlFor="role">
+                                  <i className="fas fa-user-tag me-2"></i>
+                                  User Role
+                                </label>
+                              </div>
+                            )}
                           </>
                         )}
                       </div>
@@ -456,11 +460,10 @@ const Profile = () => {
                                 className="form-control"
                                 id="createdAt"
                                 value={
-                                  data?.createdAt
-                                    ? new Date(user.createdAt).toLocaleDateString()
-                                    : data?.createdAt
+                                  formatDate(data?.createdAt)
                                 }
                                 readOnly
+                                disabled
                                 style={{ borderRadius: '10px', backgroundColor: '#f8f9fa' }}
                               />
                               <label htmlFor="createdAt">
@@ -475,11 +478,10 @@ const Profile = () => {
                                 className="form-control"
                                 id="updatedAt"
                                 value={
-                                  data?.updatedAt
-                                    ? new Date(user.updatedAt).toLocaleDateString()
-                                    : data?.updatedAt
+                                  formatDate(data?.updatedAt)
                                 }
                                 readOnly
+                                disabled
                                 style={{ borderRadius: '10px', backgroundColor: '#f8f9fa' }}
                               />
                               <label htmlFor="updatedAt">
@@ -488,45 +490,28 @@ const Profile = () => {
                               </label>
                             </div>
 
-                            <div className="card mb-3" style={{ borderRadius: '10px', backgroundColor: '#f8f9fa' }}>
-                              <div className="card-body py-3">
-                                <div className="form-check form-switch">
-                                  <input
-                                    className="form-check-input"
-                                    type="checkbox"
-                                    name="isActive"
-                                    id="isActive"
-                                    defaultChecked={data?.isActive}
-                                    onChange={handleChange}
-                                    style={{ transform: 'scale(1.2)' }}
-                                  />
-                                  <label className="form-check-label fw-semibold" htmlFor="isActive">
-                                    <i className="fas fa-toggle-on me-2 text-success"></i>
-                                    Account Active
-                                  </label>
+                            {user?.role === 'admin' && (
+                              <div className="card mb-3" style={{ borderRadius: '10px', backgroundColor: '#f8f9fa' }}>
+                                <div className="card-body py-3">
+                                  <div className="form-check form-switch">
+                                    <input
+                                      className="form-check-input"
+                                      type="checkbox"
+                                      name="isActive"
+                                      id="isActive"
+                                      defaultChecked={data?.isActive}
+                                      onChange={handleChange}
+                                      style={{ transform: 'scale(1.2)' }}
+                                    />
+                                    <label className="form-check-label fw-semibold" htmlFor="isActive">
+                                      <i className="fas fa-toggle-on me-2 text-success"></i>
+                                      Account Active
+                                    </label>
+                                  </div>
                                 </div>
                               </div>
-                            </div>
+                            )}
 
-                            <div className="card mb-3" style={{ borderRadius: '10px', backgroundColor: '#f8f9fa' }}>
-                              <div className="card-body py-3">
-                                <div className="form-check form-switch">
-                                  <input
-                                    className="form-check-input"
-                                    type="checkbox"
-                                    name="isEmailVerified"
-                                    id="isEmailVerified"
-                                    defaultChecked={data?.isEmailVerified}
-                                    onChange={handleChange}
-                                    style={{ transform: 'scale(1.2)' }}
-                                  />
-                                  <label className="form-check-label fw-semibold" htmlFor="isEmailVerified">
-                                    <i className="fas fa-envelope-open-text me-2 text-primary"></i>
-                                    Email Verified
-                                  </label>
-                                </div>
-                              </div>
-                            </div>
                           </>
                         ) : (
                           <>
@@ -536,11 +521,10 @@ const Profile = () => {
                                 className="form-control"
                                 id="createdAt"
                                 defaultValue={
-                                  user?.createdAt
-                                    ? new Date(user.createdAt).toLocaleDateString()
-                                    : ""
+                                  formatDate(user?.createdAt)
                                 }
                                 readOnly
+                                disabled
                                 style={{ borderRadius: '10px', backgroundColor: '#f8f9fa' }}
                               />
                               <label htmlFor="createdAt">
@@ -555,11 +539,10 @@ const Profile = () => {
                                 className="form-control"
                                 id="updatedAt"
                                 defaultValue={
-                                  user?.updatedAt
-                                    ? new Date(user.updatedAt).toLocaleDateString()
-                                    : ""
+                                  formatDate(user?.updatedAt)
                                 }
                                 readOnly
+                                disabled
                                 style={{ borderRadius: '10px', backgroundColor: '#f8f9fa' }}
                               />
                               <label htmlFor="updatedAt">
@@ -568,47 +551,51 @@ const Profile = () => {
                               </label>
                             </div>
 
-                            <div className="card mb-3" style={{ borderRadius: '10px', backgroundColor: '#f8f9fa' }}>
-                              <div className="card-body py-3">
-                                <div className="form-check form-switch">
-                                  <input
-                                    className="form-check-input"
-                                    type="checkbox"
-                                    defaultValue={user?.isActive}
-                                    name="isActive"
-                                    id="isActive"
-                                    defaultChecked={user?.isActive}
-                                    onChange={handleChange}
-                                    style={{ transform: 'scale(1.2)' }}
-                                  />
-                                  <label className="form-check-label fw-semibold" htmlFor="isActive">
-                                    <i className="fas fa-toggle-on me-2 text-success"></i>
-                                    Account Active
-                                  </label>
+                            {user?.role === 'admin' && (
+                              <div className="card mb-3" style={{ borderRadius: '10px', backgroundColor: '#f8f9fa' }}>
+                                <div className="card-body py-3">
+                                  <div className="form-check form-switch">
+                                    <input
+                                      className="form-check-input"
+                                      type="checkbox"
+                                      defaultValue={user?.isActive}
+                                      name="isActive"
+                                      id="isActive"
+                                      defaultChecked={user?.isActive}
+                                      onChange={handleChange}
+                                      style={{ transform: 'scale(1.2)' }}
+                                    />
+                                    <label className="form-check-label fw-semibold" htmlFor="isActive">
+                                      <i className="fas fa-toggle-on me-2 text-success"></i>
+                                      Account Active
+                                    </label>
+                                  </div>
                                 </div>
                               </div>
-                            </div>
+                            )}
 
-                            <div className="card mb-3" style={{ borderRadius: '10px', backgroundColor: '#f8f9fa' }}>
-                              <div className="card-body py-3">
-                                <div className="form-check form-switch">
-                                  <input
-                                    className="form-check-input"
-                                    type="checkbox"
-                                    defaultValue={user?.isEmailVerified}
-                                    name="isEmailVerified"
-                                    id="isEmailVerified"
-                                    defaultChecked={user?.isEmailVerified}
-                                    onChange={handleChange}
-                                    style={{ transform: 'scale(1.2)' }}
-                                  />
-                                  <label className="form-check-label fw-semibold" htmlFor="isEmailVerified">
-                                    <i className="fas fa-envelope-open-text me-2 text-primary"></i>
-                                    Email Verified
-                                  </label>
+                            {user?.role === 'admin' && (
+                              <div className="card mb-3" style={{ borderRadius: '10px', backgroundColor: '#f8f9fa' }}>
+                                <div className="card-body py-3">
+                                  <div className="form-check form-switch">
+                                    <input
+                                      className="form-check-input"
+                                      type="checkbox"
+                                      defaultValue={user?.isEmailVerified}
+                                      name="isEmailVerified"
+                                      id="isEmailVerified"
+                                      defaultChecked={user?.isEmailVerified}
+                                      onChange={handleChange}
+                                      style={{ transform: 'scale(1.2)' }}
+                                    />
+                                    <label className="form-check-label fw-semibold" htmlFor="isEmailVerified">
+                                      <i className="fas fa-envelope-open-text me-2 text-primary"></i>
+                                      Email Verified
+                                    </label>
+                                  </div>
                                 </div>
                               </div>
-                            </div>
+                            )}
                           </>
                         )}
                       </div>
@@ -623,8 +610,8 @@ const Profile = () => {
                       <button
                         type="submit"
                         className={`btn btn-sm btn-primary px-3 py-2 ${isUpdate
-                            ? 'btn-primary slide-up-animation'
-                            : 'btn-outline-primary'
+                          ? 'btn-primary slide-up-animation'
+                          : 'btn-outline-primary'
                           }`}
                         disabled={isLoading || !isUpdate}
                         style={{
