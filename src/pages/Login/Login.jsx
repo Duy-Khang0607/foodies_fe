@@ -39,8 +39,11 @@ const Login = () => {
 
     try {
       const response = await loginUser(data);
-
-      if (response?.success) {
+      console.log({response});
+      console.log({data})
+      
+      // Kiểm tra xem có phải login thành công không
+      if (response?.success === true) {
         const tokens = response?.data?.tokens;
         const userData = response?.data?.user;
 
@@ -63,16 +66,18 @@ const Login = () => {
 
         navigate("/", { replace: true });
       } else {
+        // Xử lý khi login thất bại (sai username/password)
         const errorMessage =
-          response?.data?.message || response?.message || "Login failed";
+          response?.message || 
+          response?.data?.message || 
+          "Invalid username or password";
         toast.error(errorMessage);
       }
     } catch (error) {
+      // Xử lý các lỗi mạng hoặc lỗi không mong đợi
       console.error("Login error:", error);
 
       const errorMessage =
-        error?.response?.data?.message ||
-        error?.response?.message ||
         error?.message ||
         "Network error. Please try again.";
 
@@ -81,6 +86,7 @@ const Login = () => {
       setIsLoading(false);
     }
   };
+  
   return (
     <div
       className="vh-100 d-flex align-items-center justify-content-center"

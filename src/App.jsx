@@ -26,16 +26,6 @@ import AddFood from "./pages/AddFood/AddFood";
 import Orders from "./pages/Orders/Orders";
 import "./App.css";
 
-// Layout component có Menubar
-const MainLayout = ({ children }) => {
-  return (
-    <>
-      <Menubar />
-      {children}
-    </>
-  );
-};
-
 // Layout component với Authentication + Menubar
 const AuthenticatedLayout = ({ children }) => {
   return (

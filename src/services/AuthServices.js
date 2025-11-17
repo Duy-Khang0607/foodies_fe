@@ -1,4 +1,3 @@
-import axios from "axios";
 import { api } from "../lib/axios";
 
 
@@ -9,7 +8,7 @@ export const loginUser = async (data) => {
         return response?.data;
     } catch (error) {
         if (error.response) {
-            return error.response;
+            return error.response.data;  // Trả về data thay vì toàn bộ response
         }
         throw error;
     }
@@ -21,7 +20,7 @@ export const signupUser = async (data) => {
         return response?.data;
     } catch (error) {
         if (error.response) {
-            return error.response;
+            return error.response.data;
         }
         throw error;
     }
@@ -34,7 +33,7 @@ export const updateProfile = async (data) => {
         return response?.data;
     } catch (error) {
         if (error.response) {
-            return error.response;
+            return error.response.data;
         }
         throw error;
     }
@@ -47,7 +46,7 @@ export const getCurrentUser = async () => {
         return response?.data;
     } catch (error) {
         if (error.response) {
-            return error.response;
+            return error.response.data;
         }
         throw error;
     }
@@ -61,7 +60,7 @@ export const refreshToken = async (refreshTokenValue) => {
         return response?.data;
     } catch (error) {
         if (error.response) {
-            return error.response;
+            return error.response.data;
         }
         throw error;
     }
@@ -74,8 +73,8 @@ export const forgotPassword = async (data) => {
         return response?.data;
     }
     catch (error) {
-        if (error) {
-            return error;
+        if (error.response) {
+            return error.response.data;
         }
         throw error;
     }
@@ -91,8 +90,8 @@ export const resetPassword = async (data) => {
         return response?.data;
     }
     catch (error) {
-        if (error) {
-            return error;
+        if (error.response) {
+            return error.response.data;
         }
         throw error;
     }
@@ -105,8 +104,8 @@ export const changePassword = async (data) => {
         return response?.data;
     }
     catch (error) {
-        if (error) {
-            return error;
+        if (error.response) {
+            return error.response.data;
         }
         throw error;
     }

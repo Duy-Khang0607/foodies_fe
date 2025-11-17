@@ -6,6 +6,7 @@ import { toast } from "react-toastify";
 import { PhotoProvider, PhotoView } from "react-photo-view";
 import { convertToBase64 } from "../../utils/convertToBase64";
 import { useNavigate } from "react-router-dom";
+import "./profile.css";
 
 const Profile = () => {
   const navigate = useNavigate();
@@ -76,7 +77,7 @@ const Profile = () => {
         isEmailVerified: user.isEmailVerified || false,
       });
     }
-    setIsUpdate(true);
+    setIsUpdate(!isUpdate);
   };
 
   const handleCancel = (e) => {
@@ -91,7 +92,7 @@ const Profile = () => {
       isEmailVerified: false,
     });
     setAvatarUploadSuccess(false);
-    setIsUpdate(false);
+    setIsUpdate(!isUpdate);
   };
 
   const handleSubmit = async (e) => {
@@ -133,19 +134,19 @@ const Profile = () => {
     }
   }, [user, isUpdate]);
   return (
-    <div className="min-vh-100" style={{ 
-      background: 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)',
+    <div className="min-vh-100 d-flex align-items-center justify-content-center" style={{
+      background: 'linear-gradient(135deg,rgb(218, 218, 218) 0%,rgb(181, 176, 187) 100%)',
       padding: '2rem 0'
     }}>
-      <div className="container">
+      <div className="container-fluid">
         <div className="row justify-content-center">
           <div className="col-12 col-lg-10 col-xl-8">
             {/* Header with Back Button */}
             <div className="d-flex justify-content-between align-items-center mb-4">
-              <button 
-                className="btn btn-outline-light btn-sm d-flex align-items-center" 
+              <button
+                className="btn btn-outline-light btn-sm d-flex align-items-center"
                 onClick={() => navigate("/")}
-                style={{ 
+                style={{
                   borderRadius: '25px',
                   padding: '0.5rem 1rem',
                   transition: 'all 0.3s ease'
@@ -164,12 +165,12 @@ const Profile = () => {
               </button>
               <h2 className="text-white mb-0 fw-bold">
                 <i className="fas fa-user-circle me-2"></i>
-                Profile Management
+                Account
               </h2>
             </div>
 
             {/* Main Profile Card */}
-            <div className="card shadow-lg border-0" style={{ 
+            <div className="card shadow-lg border-0" style={{
               borderRadius: '20px',
               overflow: 'hidden',
               background: 'rgba(255, 255, 255, 0.95)',
@@ -178,7 +179,7 @@ const Profile = () => {
               <div className="row g-0">
                 {/* Profile Image Section */}
                 <div className="col-12 col-md-4 d-flex flex-column align-items-center p-4" style={{
-                  background: 'linear-gradient(135deg, #f093fb 0%, #f5576c 100%)',
+                  background: 'linear-gradient(135deg,rgb(197, 186, 199) 0%,rgb(209, 187, 190) 100%)',
                   color: 'white'
                 }}>
                   <div className="position-relative mb-3">
@@ -187,7 +188,7 @@ const Profile = () => {
                         src={data?.avatar || user?.avatar || assets?.profile}
                         className="object-fit-cover w-100 h-100"
                       >
-                        <div 
+                        <div
                           className="rounded-circle shadow-lg overflow-hidden position-relative"
                           style={{
                             width: "180px",
@@ -212,14 +213,14 @@ const Profile = () => {
                               objectFit: "cover",
                             }}
                           />
-                          <div className="position-absolute top-0 start-0 w-100 h-100 d-flex align-items-center justify-content-center" 
-                               style={{ 
-                                 background: 'rgba(0,0,0,0.3)',
-                                 opacity: 0,
-                                 transition: 'opacity 0.3s ease'
-                               }}
-                               onMouseOver={(e) => e.target.style.opacity = '1'}
-                               onMouseOut={(e) => e.target.style.opacity = '0'}
+                          <div className="position-absolute top-0 start-0 w-100 h-100 d-flex align-items-center justify-content-center"
+                            style={{
+                              background: 'rgba(0,0,0,0.3)',
+                              opacity: 0,
+                              transition: 'opacity 0.3s ease'
+                            }}
+                            onMouseOver={(e) => e.target.style.opacity = '1'}
+                            onMouseOut={(e) => e.target.style.opacity = '0'}
                           >
                             <i className="fas fa-camera text-white fs-4"></i>
                           </div>
@@ -229,13 +230,12 @@ const Profile = () => {
                   </div>
 
                   <h4 className="fw-bold mb-2 text-center">
-                    {user?.name || user?.username || "User"}
+                    {user?.name}
                   </h4>
-                  
+
                   <div className="d-flex align-items-center mb-3">
-                    <span className={`badge px-3 py-2 rounded-pill ${
-                      user?.role === 'admin' ? 'bg-danger' : 'bg-primary'
-                    }`} style={{ fontSize: '0.9rem' }}>
+                    <span className={`badge px-3 py-2 rounded-pill ${user?.role === 'admin' ? 'bg-danger' : 'bg-primary'
+                      }`} style={{ fontSize: '0.9rem' }}>
                       <i className={`fas ${user?.role === 'admin' ? 'fa-crown' : 'fa-user'} me-1`}></i>
                       {user?.role?.toUpperCase()}
                     </span>
@@ -247,9 +247,9 @@ const Profile = () => {
                       Follow
                     </button>
                     {isUpdate ? (
-                      <button 
-                        className="btn btn-danger btn-sm rounded-pill px-3" 
-                        onClick={handleCancel}
+                      <button
+                        className="btn btn-danger btn-sm rounded-pill px-3"
+                        onClick={() => handleCancel()}
                         style={{ transition: 'all 0.3s ease' }}
                         onMouseOver={(e) => e.target.style.transform = 'scale(1.05)'}
                         onMouseOut={(e) => e.target.style.transform = 'scale(1)'}
@@ -258,9 +258,9 @@ const Profile = () => {
                         Cancel
                       </button>
                     ) : (
-                      <button 
-                        className="btn btn-light btn-sm rounded-pill px-3" 
-                        onClick={handleEdit}
+                      <button
+                        className="btn btn-light btn-sm rounded-pill px-3"
+                        onClick={() => handleEdit()}
                         style={{ transition: 'all 0.3s ease' }}
                         onMouseOver={(e) => e.target.style.transform = 'scale(1.05)'}
                         onMouseOut={(e) => e.target.style.transform = 'scale(1)'}
@@ -302,7 +302,7 @@ const Profile = () => {
                                 Full Name
                               </label>
                             </div>
-                            
+
                             <div className="mb-3">
                               <label htmlFor="avatar" className="form-label fw-semibold">
                                 <i className="fas fa-image me-2"></i>
@@ -382,7 +382,7 @@ const Profile = () => {
                                 Full Name
                               </label>
                             </div>
-                            
+
                             <div className="mb-3">
                               <label htmlFor="avatar" className="form-label fw-semibold">
                                 <i className="fas fa-image me-2"></i>
@@ -468,7 +468,7 @@ const Profile = () => {
                                 Created Date
                               </label>
                             </div>
-                            
+
                             <div className="form-floating mb-3">
                               <input
                                 type="text"
@@ -548,7 +548,7 @@ const Profile = () => {
                                 Created Date
                               </label>
                             </div>
-                            
+
                             <div className="form-floating mb-3">
                               <input
                                 type="text"
@@ -614,30 +614,35 @@ const Profile = () => {
                       </div>
                     </div>
 
-                    {/* Submit Button */}
-                    <div className="text-center mt-4">
+                    {/* Submit Button with Animation */}
+                    <div className="text-center mt-4" style={{
+                      overflow: 'hidden',
+                      transition: 'all 0.3s ease-in-out',
+                      transform: isUpdate ? 'translateY(0)' : 'translateY(30px)'
+                    }}>
                       <button
                         type="submit"
-                        className={`btn btn-lg px-5 py-3 ${
-                          isUpdate 
-                            ? 'btn-primary' 
+                        className={`btn btn-sm btn-primary px-3 py-2 ${isUpdate
+                            ? 'btn-primary slide-up-animation'
                             : 'btn-outline-primary'
-                        }`}
-                        disabled={isLoading}
-                        hidden={!isUpdate}
-                        style={{ 
+                          }`}
+                        disabled={isLoading || !isUpdate}
+                        style={{
                           borderRadius: '25px',
                           transition: 'all 0.3s ease',
-                          boxShadow: isUpdate ? '0 4px 15px rgba(13, 110, 253, 0.3)' : 'none'
+                          boxShadow: isUpdate ? '0 4px 15px rgba(13, 110, 253, 0.3)' : 'none',
+                          opacity: isUpdate ? 1 : 0,
+                          transform: isUpdate ? 'translateY(0)' : 'translateY(30px)',
+                          pointerEvents: isUpdate ? 'auto' : 'none'
                         }}
                         onMouseOver={(e) => {
-                          if (isUpdate) {
+                          if (isUpdate && !isLoading) {
                             e.target.style.transform = 'translateY(-2px)';
                             e.target.style.boxShadow = '0 6px 20px rgba(13, 110, 253, 0.4)';
                           }
                         }}
                         onMouseOut={(e) => {
-                          if (isUpdate) {
+                          if (isUpdate && !isLoading) {
                             e.target.style.transform = 'translateY(0)';
                             e.target.style.boxShadow = '0 4px 15px rgba(13, 110, 253, 0.3)';
                           }
@@ -650,12 +655,12 @@ const Profile = () => {
                               role="status"
                               aria-hidden="true"
                             ></span>
-                            <i className="fas fa-save me-2"></i>
+                            <i className="bi bi-arrow-repeat"></i>
                             Updating Profile...
                           </>
                         ) : (
                           <>
-                            <i className="fas fa-save me-2"></i>
+                            <i className="bi bi-arrow-repeat me-2"></i>
                             Update Profile
                           </>
                         )}
