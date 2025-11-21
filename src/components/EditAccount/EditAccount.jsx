@@ -8,6 +8,7 @@ import { updateProfile } from '../../services/AuthServices';
 
 const EditAccount = ({ isOpen, onClose, userData, fetchUser }) => {
     const [isAnimating, setIsAnimating] = useState(false)
+    const [isCancel, setIsCancel] = useState(false)
     const [loading, setLoading] = useState(false)
     const [avatarUploadSuccess, setAvatarUploadSuccess] = useState(false);
     const [error, setError] = useState({
@@ -33,7 +34,6 @@ const EditAccount = ({ isOpen, onClose, userData, fetchUser }) => {
     });
 
     const handleSubmit = async (e) => {
-        console.log({data})
         e.preventDefault();
         setLoading(true);
         setError({
@@ -84,7 +84,6 @@ const EditAccount = ({ isOpen, onClose, userData, fetchUser }) => {
     const handleChange = async (e) => {
         const { name, value, type, checked, files } = e.target;
 
-        // Reset lỗi của field đang được chỉnh sửa
         setError((prevError) => ({
             ...prevError,
             [name]: "",
@@ -103,7 +102,6 @@ const EditAccount = ({ isOpen, onClose, userData, fetchUser }) => {
                 toast.success("Avatar uploaded successfully!");
             } catch (error) {
                 toast.error("Lỗi khi upload file!");
-                // Set lỗi cho avatar nếu upload thất bại
                 setError((prevError) => ({
                     ...prevError,
                     avatar: error?.message || "Lỗi khi upload file!",
@@ -119,6 +117,15 @@ const EditAccount = ({ isOpen, onClose, userData, fetchUser }) => {
         }
     };
 
+    const handleCancel = () => {
+        setIsCancel(true)
+        // Đợi animation hoàn thành (500ms) trước khi đóng modal
+        setTimeout(() => {
+            onClose()
+            setIsCancel(false)
+        }, 500)
+    }
+    
     useEffect(() => {
         if (userData) {
             setData({
@@ -134,8 +141,8 @@ const EditAccount = ({ isOpen, onClose, userData, fetchUser }) => {
             });
         }
 
-        // Reset lỗi khi modal được mở
         if (isOpen) {
+            setIsCancel(false) // Reset isCancel khi mở modal
             setTimeout(() => setIsAnimating(true), 10);
             setError({
                 name: "",
@@ -158,14 +165,14 @@ const EditAccount = ({ isOpen, onClose, userData, fetchUser }) => {
 
     return (
         <>
-            {/* Backdrop */}
             <div
-                className={`position-fixed top-0 start-0 w-100 h-100 bg-dark transition-opacity duration-300 ${isAnimating ? 'opacity-50' : 'opacity-0'}`}
+                className={`position-fixed top-0 start-0 w-100 h-100 bg-dark`}
                 style={{
-                    zIndex: 99,
-                    transition: 'opacity 0.3s ease-in-out'
+                    zIndex: 999,
+                    opacity: isCancel ? 0 : isAnimating ? 0.5 : 0,
+                    transition: 'opacity 0.5s ease-in-out'
                 }}
-                onClick={onClose}
+                onClick={handleCancel}
             />
 
             {/* Modal */}
@@ -173,14 +180,13 @@ const EditAccount = ({ isOpen, onClose, userData, fetchUser }) => {
                 className="modal d-block"
                 tabIndex="-1"
                 role="dialog"
-            // style={{ zIndex: 99 }}
             >
                 <div
                     className="modal-dialog modal-xl modal-dialog-centered"
                     role="document"
                     style={{
-                        transform: isAnimating ? 'translateY(0)' : 'translateY(-100%)',
-                        opacity: isAnimating ? 1 : 0,
+                        transform: isCancel ? 'translateY(-100%)' : isAnimating ? 'translateY(0)' : 'translateY(-100%)',
+                        opacity: isCancel ? 0 : isAnimating ? 1 : 0,
                         transition: 'transform 0.5s cubic-bezier(0.68, -0.55, 0.265, 1.55), opacity 0.5s ease-in-out'
                     }}>
                     <div className="modal-content">
@@ -190,9 +196,9 @@ const EditAccount = ({ isOpen, onClose, userData, fetchUser }) => {
                             <button
                                 type="button"
                                 className="btn-close"
-                                onClick={onClose}
+                                onClick={handleCancel}
                                 aria-label="Close"
-                                style={{ cursor: 'pointer', transform: !isAnimating ? 'translateY(-100%)' : 'translateY(0)' }}
+                                style={{ cursor: 'pointer', transform: isCancel ? 'translateY(-100%)' : !isAnimating ? 'translateY(-100%)' : 'translateY(0)' }}
                             ></button>
                         </div>
 
@@ -499,7 +505,7 @@ const EditAccount = ({ isOpen, onClose, userData, fetchUser }) => {
                             <button
                                 type="button"
                                 className="btn btn-secondary"
-                                onClick={onClose}
+                                onClick={handleCancel}
                             >
                                 Cancel
                             </button>

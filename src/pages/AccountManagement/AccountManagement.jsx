@@ -29,7 +29,7 @@ const AccountManagement = () => {
         } finally {
             setLoading(false)
         }
-    }, []) // Bỏ dependency 'account' để tránh infinite loop
+    }, []) 
 
     const handleDelete = async (userId) => {
         setLoading(true)
@@ -61,8 +61,7 @@ const AccountManagement = () => {
 
     useEffect(() => {
         fetchAccount()
-    }, [fetchAccount]) // Thêm fetchAccount vào dependency array
-
+    }, [fetchAccount]) 
 
 
     return (
@@ -76,7 +75,7 @@ const AccountManagement = () => {
                             </div>
                             <div className="card-body p-0">
                                 <div className="table-responsive">
-                                    <table className="table table-hover mb-0">
+                                    <table className="table table-hover mb-0 w-100 h-100">
                                         <thead className="table-light text-center">
                                             <tr>
                                                 <th>STT</th>

@@ -192,7 +192,6 @@ const Login = () => {
                 <form
                   onSubmit={handleSubmit}
                   className="needs-validation"
-                  noValidate
                 >
                   <div className="mb-3">
                     <div className="form-floating">
