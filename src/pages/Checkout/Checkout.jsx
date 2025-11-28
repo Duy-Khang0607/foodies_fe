@@ -3,7 +3,7 @@ import { useNavigate } from 'react-router-dom'
 import { toast } from 'react-toastify'
 import { StoreContext } from '../../context/StoreContext'
 import { createOrder } from '../../services/OrderServices'
-import { formatCurrency } from '../../HOC/formatCurrency'
+import { formatCurrency } from '../../utils/utils'
 import './checkout.css'
 import { createPayment } from '../../services/VnpayServices'
 

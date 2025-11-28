@@ -1,9 +1,8 @@
 import React, { useEffect, useState } from 'react'
 import { toast } from 'react-toastify'
 import Loading from '../../components/Loading/Loading'
-import { convertToBase64 } from '../../HOC/convertToBase64'
 import { assets } from '../../assets/assets'
-import { formatCurrency, parseCurrencyInput, convertToApiPrice } from '../../HOC/formatCurrency'
+import { formatCurrency, convertToApiPrice,parseCurrencyInput,convertToBase64 } from '../../utils/utils'
 import { PhotoProvider, PhotoView } from 'react-photo-view';
 import 'react-photo-view/dist/react-photo-view.css';
 import { deleteFood, getFoods, updateFood } from '../../services/FoodServices'
@@ -24,7 +23,7 @@ const ListFood = () => {
     setLoading(true);
     try {
       const response = await getFoods();
-      console.log({response})
+      console.log({ response })
       setData(response?.data?.data);
       toast.success('Get food successfully')
     } catch (error) {
@@ -62,9 +61,9 @@ const ListFood = () => {
         price: convertToApiPrice(data?.price),
         file: data?.file instanceof File ? await convertToBase64(data?.file, 100, 100, 0.5) : data?.file
       }
-      
+
       console.log('Update payload being sent to API:', payload);
-      
+
       const response = await updateFood(id, payload);
       if (response?.status === 200) {
         toast.success('Update food successfully')

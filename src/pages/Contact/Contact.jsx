@@ -2,6 +2,8 @@ import React, { useState } from "react";
 import "./contact.css";
 import { PhotoProvider, PhotoView } from "react-photo-view";
 import "react-photo-view/dist/react-photo-view.css";
+import { sendContactEmail } from "../../services/ContactService";
+import { toast } from "react-toastify";
 
 const Contact = () => {
   const [formData, setFormData] = useState({
@@ -19,12 +21,19 @@ const Contact = () => {
     }));
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    // Handle form submission here
-    console.log("Form submitted:", formData);
-    alert("Thank you for your message! We will get back to you soon.");
-    setFormData({ name: "", email: "", phone: "", message: "" });
+    try {
+      const response = await sendContactEmail(formData);
+      if (response?.success) {
+        toast.success(response?.message);
+      }else{
+        toast.error(response?.message);
+      }
+      setFormData({ name: "", email: "", phone: "", message: "" });
+    } catch (error) {
+      toast.error(error?.message);
+    }
   };
 
   return (
@@ -117,7 +126,7 @@ const Contact = () => {
                           required
                         />
                         <label htmlFor="email">
-                          <i className="bi bi-envelope me-2"></i>Email Address
+                          <i className="bi bi-envelope me-2 text-primary"></i>Email Address
                         </label>
                       </div>
                     </div>
@@ -133,7 +142,7 @@ const Contact = () => {
                           onChange={handleInputChange}
                         />
                         <label htmlFor="phone">
-                          <i className="bi bi-telephone me-2"></i>Phone Number
+                          <i className="bi bi-telephone me-2 text-primary"></i>Phone Number
                         </label>
                       </div>
                     </div>
@@ -147,7 +156,7 @@ const Contact = () => {
                           <option value="feedback">Feedback</option>
                         </select>
                         <label htmlFor="subject">
-                          <i className="bi bi-tag me-2"></i>Subject
+                          <i className="bi bi-tag me-2 text-primary"></i>Subject
                         </label>
                       </div>
                     </div>
@@ -164,7 +173,7 @@ const Contact = () => {
                           required
                         ></textarea>
                         <label htmlFor="message">
-                          <i className="bi bi-chat-text me-2"></i>Your Message
+                          <i className="bi bi-chat-text me-2 text-primary"></i>Your Message
                         </label>
                       </div>
                     </div>
@@ -214,16 +223,12 @@ const Contact = () => {
                   <div className="contact-info-item p-4 border-bottom">
                     <div className="d-flex align-items-start">
                       <div className="contact-icon me-3">
-                        <i className="bi bi-geo-alt-fill text-primary"></i>
+                        <i className="bi bi-geo-alt-fill text-white"></i>
                       </div>
                       <div>
                         <h6 className="fw-bold mb-1">Address</h6>
                         <p className="text-muted mb-0">
-                          601 Sherwood Avenue
-                          <br />
-                          San Bernardino, CA 92408
-                          <br />
-                          United States
+                          Việt Nam
                         </p>
                       </div>
                     </div>
@@ -232,7 +237,7 @@ const Contact = () => {
                   <div className="contact-info-item p-4 border-bottom">
                     <div className="d-flex align-items-start">
                       <div className="contact-icon me-3">
-                        <i className="bi bi-telephone-fill text-primary"></i>
+                        <i className="bi bi-telephone-fill text-white"></i>
                       </div>
                       <div>
                         <h6 className="fw-bold mb-1">Phone</h6>
@@ -241,14 +246,7 @@ const Contact = () => {
                             href="tel:+12515469442"
                             className="text-decoration-none"
                           >
-                            +1 (251) 546-9442
-                          </a>
-                          <br />
-                          <a
-                            href="tel:+16304468851"
-                            className="text-decoration-none"
-                          >
-                            +1 (630) 446-8851
+                            0902926340
                           </a>
                         </p>
                       </div>
@@ -258,23 +256,16 @@ const Contact = () => {
                   <div className="contact-info-item p-4">
                     <div className="d-flex align-items-start">
                       <div className="contact-icon me-3">
-                        <i className="bi bi-envelope-fill text-primary"></i>
+                        <i className="bi bi-envelope-fill text-white"></i>
                       </div>
                       <div>
                         <h6 className="fw-bold mb-1">Email</h6>
                         <p className="text-muted mb-0">
                           <a
-                            href="mailto:info@foodies.com"
+                            href="mailto:nguyenhoangduykhang0607@gmail.com"
                             className="text-decoration-none"
                           >
-                            info@foodies.com
-                          </a>
-                          <br />
-                          <a
-                            href="mailto:support@foodies.com"
-                            className="text-decoration-none"
-                          >
-                            support@foodies.com
+                            nguyenhoangduykhang0607@gmail.com
                           </a>
                         </p>
                       </div>
@@ -303,7 +294,7 @@ const Contact = () => {
                     </div>
                     <div className="d-flex justify-content-between">
                       <span>Sunday</span>
-                      <span className="fw-semibold text-muted">Closed</span>
+                      <span className="fw-semibold text-danger">Closed</span>
                     </div>
                   </div>
                 </div>

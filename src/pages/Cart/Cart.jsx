@@ -1,13 +1,11 @@
 import React, { useContext, useEffect } from 'react'
-import { Link, useNavigate } from 'react-router-dom'
+import { Link } from 'react-router-dom'
 import { toast } from 'react-toastify'
 import { StoreContext } from '../../context/StoreContext'
-import { createPayment } from '../../services/VnpayServices'
-import { formatCurrency } from '../../HOC/formatCurrency'
+import { formatCurrency } from '../../utils/utils'
 import './cart.css'
 
 const Cart = () => {
-    const navigate = useNavigate()
     const { foodList, increaseQuantity, decreaseQuantity, removeFromCart, cart, clearCart } = useContext(StoreContext)
     
     // Scroll to top when component mounts

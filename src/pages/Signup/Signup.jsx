@@ -8,6 +8,7 @@ const Signup = () => {
   const navigate = useNavigate();
   const { token } = useContext(StoreContext);
   const [isLoading, setIsLoading] = useState(false);
+  const [showPassword, setShowPassword] = useState(false);
   const [data, setData] = useState({
     name: '',
     email: '',
@@ -66,6 +67,7 @@ const Signup = () => {
       setIsLoading(false);
     }
   };
+
   const handleChange = (e) => {
     const { name, value } = e.target;
     setData(prevData => ({
@@ -73,6 +75,11 @@ const Signup = () => {
       [name]: value
     }))
   }
+
+  const togglePasswordVisibility = () => {
+    setShowPassword(!showPassword);
+  };
+
   return (
     <div className="vh-100 d-flex align-items-center justify-content-center" style={{
       backgroundImage: 'url("/src/assets/bg_login_register.png")',
@@ -208,7 +215,7 @@ const Signup = () => {
                   <div className="mb-3">
                     <div className="form-floating">
                       <input
-                        type="password"
+                        type={showPassword ? "text" : "password"}
                         className="form-control"
                         id="password"
                         placeholder="Enter your password"
@@ -224,6 +231,26 @@ const Signup = () => {
                         <i className="fas fa-lock me-2"></i>
                         Password
                       </label>
+                      <button
+                        type="button"
+                        className="btn btn-outline-secondary"
+                        onClick={togglePasswordVisibility}
+                        style={{
+                          borderRadius: "0 12px 12px 0",
+                          border: "none",
+                          transition: "all 0.3s ease",
+                          position: "absolute",
+                          top: "0",
+                          right: "0",
+                          height: "100%",
+                        }}
+                      >
+                        {showPassword ? (
+                          <i className="bi bi-eye"></i>
+                        ) : (
+                          <i className="bi bi-eye-slash"></i>
+                        )}
+                      </button>
                     </div>
                   </div>
 

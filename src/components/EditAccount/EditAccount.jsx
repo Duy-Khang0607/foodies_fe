@@ -1,8 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import { PhotoProvider, PhotoView } from 'react-photo-view'
-import { formatDate } from '../../utils/formatDate';
 import { assets } from '../../assets/assets';
-import { convertToBase64 } from '../../utils/convertToBase64';
+import { convertToBase64,formatDate } from '../../utils/utils';
 import { toast } from 'react-toastify';
 import { updateProfile } from '../../services/AuthServices';
 
@@ -59,7 +58,7 @@ const EditAccount = ({ isOpen, onClose, userData, fetchUser }) => {
                 toast.error(response?.message);
                 // Xử lý lỗi từ API
                 const errorMessage = response?.message || "Có lỗi xảy ra";
-                
+
                 // Parse lỗi dựa trên message từ API để xác định field bị lỗi
                 if (errorMessage.toLowerCase().includes('email')) {
                     setError(prev => ({ ...prev, email: errorMessage }));
@@ -125,7 +124,7 @@ const EditAccount = ({ isOpen, onClose, userData, fetchUser }) => {
             setIsCancel(false)
         }, 500)
     }
-    
+
     useEffect(() => {
         if (userData) {
             setData({
@@ -496,6 +495,7 @@ const EditAccount = ({ isOpen, onClose, userData, fetchUser }) => {
                                             </div>
                                         </form>
                                     </div>
+                                    
                                 </div>
                             </div>
                         </div>

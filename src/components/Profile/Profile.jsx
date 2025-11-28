@@ -4,10 +4,9 @@ import { StoreContext } from "../../context/StoreContext";
 import { getCurrentUser, updateProfile } from "../../services/AuthServices";
 import { toast } from "react-toastify";
 import { PhotoProvider, PhotoView } from "react-photo-view";
-import { convertToBase64 } from "../../utils/convertToBase64";
+import { convertToBase64,formatDate } from "../../utils/utils";
 import { useNavigate } from "react-router-dom";
 import "./profile.css";
-import { formatDate } from "../../utils/formatDate";
 
 const Profile = () => {
   const navigate = useNavigate();
@@ -97,7 +96,7 @@ const Profile = () => {
   };
 
   const handleSubmit = async (e) => {
-    console.log({data})
+    console.log({ data })
     e.preventDefault();
     setIsLoading(true);
     try {
@@ -135,7 +134,9 @@ const Profile = () => {
       });
     }
   }, [user, isUpdate]);
-  console.log("user", user)
+
+
+
   return (
     <div className="min-vh-100 d-flex align-items-center justify-content-center" style={{
       background: 'linear-gradient(135deg,rgb(188, 188, 184) 0%,rgb(199, 190, 190) 100%)',
@@ -656,6 +657,7 @@ const Profile = () => {
                     </div>
                   </form>
                 </div>
+                
               </div>
             </div>
           </div>

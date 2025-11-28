@@ -19,7 +19,7 @@ const Sidebar = ({ isSidebar }) => {
             to="/admin/list-food"
           >
             <div className="d-flex align-items-center">
-              <i className="bi bi-list me-2"></i>
+              <i class="bi bi-list-check me-2"></i>
               <span>List Food</span>
             </div>
           </Link>

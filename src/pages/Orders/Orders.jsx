@@ -2,9 +2,8 @@ import React, { useEffect, useState } from 'react'
 import { toast } from 'react-toastify'
 import Loading from '../../components/Loading/Loading'
 import { getOrders, updateOrderStatus, deleteOrder } from '../../services/OrderServices'
-import { formatCurrency } from '../../HOC/formatCurrency'
+import { formatCurrency,formatDate } from '../../utils/utils'
 import './Orders.css'
-import { formatDate } from '../../utils/formatDate'
 
 const Orders = () => {
   const [orders, setOrders] = useState([])
@@ -534,7 +533,7 @@ const Orders = () => {
               <div className='d-flex justify-content-start align-items-center gap-2'>
                 {/* Previous */}
                 <button
-                  className='btn btn-light btn-sm p-2 rounded-pill d-flex align-items-center'
+                  className='btn btn-dark btn-sm p-2 rounded-pill d-flex align-items-center'
                   onClick={handlePreviousPage}
                   disabled={!pagination?.hasPrevPage || loading}
                 >
@@ -574,7 +573,7 @@ const Orders = () => {
 
                 {/* Next */}
                 <button
-                  className='btn btn-light btn-sm p-2 rounded-pill d-flex align-items-center'
+                  className='btn btn-dark btn-sm p-2 rounded-pill d-flex align-items-center'
                   onClick={handleNextPage}
                   disabled={!pagination?.hasNextPage || loading}
                 >

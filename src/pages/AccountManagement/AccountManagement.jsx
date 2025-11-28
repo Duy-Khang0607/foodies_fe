@@ -1,7 +1,7 @@
 import React, { useCallback, useEffect, useState } from 'react'
 import { adminDeleteUser, getAllUsers } from '../../services/AuthServices'
 import { toast } from 'react-toastify'
-import { formatDate } from '../../utils/formatDate'
+import { formatDate } from '../../utils/utils'
 import { PhotoProvider, PhotoView } from 'react-photo-view'
 import Loading from '../../components/Loading/Loading'
 import EditAccount from '../../components/EditAccount/EditAccount'
@@ -29,7 +29,7 @@ const AccountManagement = () => {
         } finally {
             setLoading(false)
         }
-    }, []) 
+    }, [])
 
     const handleDelete = async (userId) => {
         setLoading(true)
@@ -61,7 +61,7 @@ const AccountManagement = () => {
 
     useEffect(() => {
         fetchAccount()
-    }, [fetchAccount]) 
+    }, [fetchAccount])
 
 
     return (
@@ -83,8 +83,8 @@ const AccountManagement = () => {
                                                 <th>Email</th>
                                                 <th>Role</th>
                                                 <th>Avatar</th>
-                                                <th>Is Active</th>
-                                                <th>Is Email Verified</th>
+                                                <th>Active</th>
+                                                <th>Email</th>
                                                 <th>Created At</th>
                                                 <th>Updated At</th>
                                                 <th>Actions</th>
@@ -117,10 +117,10 @@ const AccountManagement = () => {
                                                         </PhotoProvider>
                                                     </td>
                                                     <td>
-                                                        <span>{user?.isActive ? 'Active' : 'Inactive'}</span>
+                                                        <span className={`badge ${user?.isActive ? 'text-bg-success' : 'text-bg-danger'}`}>{user?.isActive ? 'Active' : 'Inactive'}</span>
                                                     </td>
                                                     <td>
-                                                        <span>{user?.isEmailVerified ? 'Verified' : 'Unverified'}</span>
+                                                        <span className={`badge ${user?.isEmailVerified ? 'text-bg-success' : 'text-bg-danger'}`}>{user?.isEmailVerified ? 'Verified' : 'Unverified'}</span>
                                                     </td>
                                                     <td>
                                                         <span>{formatDate(user?.createdAt)}</span>
@@ -141,10 +141,6 @@ const AccountManagement = () => {
                                         </tbody>
                                     </table>
                                 </div>
-
-
-
-
                             </div>
                         </div>
                     </div>

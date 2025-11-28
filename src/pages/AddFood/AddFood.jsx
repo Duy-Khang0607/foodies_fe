@@ -1,8 +1,7 @@
 import React, { useState } from 'react'
 import { toast } from 'react-toastify'
-import { convertToBase64 } from '../../HOC/convertToBase64'
 import { addFood } from '../../services/FoodServices'
-import { formatCurrency, parseCurrencyInput, convertToApiPrice } from '../../HOC/formatCurrency'
+import { formatCurrency, parseCurrencyInput, convertToBase64, convertToApiPrice } from '../../utils/utils'
 import { assets } from '../../assets/assets'
 
 const AddFood = () => {
